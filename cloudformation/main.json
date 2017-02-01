@@ -1,0 +1,33 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "cloud formation template example with nested stack",
+
+    "Resources":{
+        "myStack" : {
+           "Type" : "AWS::CloudFormation::Stack",
+           "Properties" : {
+              "TemplateURL" : "https://s3.amazonaws.com/bucketname/default-dev-serviceName-service/part.json",
+              "TimeoutInMinutes" : "60"
+           }
+        },
+        "TaskQueue": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {
+                "QueueName": "lmdo-testing",
+                "MessageRetentionPeriod": "1209600",
+                "VisibilityTimeout": "80",
+                "RedrivePolicy": {
+                    "deadLetterTargetArn": {"Fn::GetAtt": ["myStack", "Outputs.TaskDeadLetterQueueArn"]},
+                    "maxReceiveCount": "10"
+                }
+            }
+        }
+    },
+
+    "Outputs": {
+        "TaskQueueUrl": {
+            "Description": "Task queue url",
+            "Value": {"Ref": "TaskQueue"}
+        }
+    }
+}

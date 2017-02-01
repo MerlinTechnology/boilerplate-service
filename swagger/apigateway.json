@@ -1,0 +1,122 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "$version"
+        "title": "$title"
+    },
+
+    "basePath": "/dev",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/example": {
+
+            "options": {
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Default response for CORS method",
+                        "headers": {
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Credentials": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "responses": {
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,x-requested-with'",
+                                "method.response.header.Access-Control-Allow-Methods" : "'DELETE,GET,OPTIONS,PUT,POST'",
+                                "method.response.header.Access-Control-Allow-Origin" : "'*'",
+                                "method.response.header.Access-Control-Allow-Credentials": "'true'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "__passthrough__"
+                            }
+                        }
+                    },
+                    "requestTemplates": {
+                        "application/json": "{\n \"statusCode\":200 \n}"
+                    },
+                    "passthroughBehavior": "when_no_match",
+                    "type": "mock"
+                }
+            },
+
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/definitions/Empty"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Headers": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            },
+                            "Access-Control-Allow-Credentials": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "responses": {
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,x-requested-with'",
+                                "method.response.header.Access-Control-Allow-Methods" : "'DELETE,GET,OPTIONS,PUT,POST'",
+                                "method.response.header.Access-Control-Allow-Origin" : "'*'",
+                                "method.response.header.Access-Control-Allow-Credentials": "'true'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "__passthrough__"
+                            }
+                        }
+                    },
+                    "requestTemplates": {
+                        "application/json": "$apiIntegrationRequestTemple"
+                    },
+                    "passthroughBehavior": "when_no_match",
+                    "uri": "arn:aws:apigateway:ap-southeast-2:lambda:path//2015-03-31/functions/lambdaARN/invocations",
+                    "httpMethod": "POST",
+                    "type": "aws"
+                }
+            }
+
+        }
+    },
+
+    "definitions": {
+        "Empty": {
+            "type": "object"
+        }
+    }
+}
