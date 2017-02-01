@@ -1,0 +1,21 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "cloud formation template nested stack",
+
+    "Resources":{
+        "DeadLetterQueue": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {
+                "QueueName": "dead-letter",
+                "MessageRetentionPeriod": "1209600"
+            }
+        }
+    },
+
+    "Outputs": {
+        "TaskDeadLetterQueueArn": {
+            "Description": "Task dead letter queue url",
+            "Value": { "Fn::GetAtt" : ["DeadLetterQueue", "Arn"]}
+        }
+    }
+}
